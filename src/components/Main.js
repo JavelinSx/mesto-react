@@ -1,7 +1,7 @@
 import avatar from '../image/Avatar.png';
 import React from 'react'
 import Card from './Card'
-import {api} from './Utils';
+import {api} from '../utils/utils.js';
 
 
 function Main({onAddPlace, onEditAvatar, onEditProfile, onCardClick}){
@@ -24,7 +24,9 @@ function Main({onAddPlace, onEditAvatar, onEditProfile, onCardClick}){
     }, [])
 
     const cardItems = cards.map(card => {
-        return <Card key={card._id} card={card} onCardClick={onCardClick}></Card>
+        return <li key={card._id} className="photo__item">
+                    <Card card={card} onCardClick={onCardClick}/>
+                </li>
     })
     
     return(

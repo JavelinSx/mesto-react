@@ -1,8 +1,8 @@
 
 export default class Api{
-    constructor(){
-        this._baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-46';
-        this._authorization = 'a53b037e-2380-4a96-99e7-f57cd5d08416';
+    constructor(url, authorization){
+        this._baseUrl = url;
+        this._authorization = authorization;
     }
 
     _parseResponse(res){

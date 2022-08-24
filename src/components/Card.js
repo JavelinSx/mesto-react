@@ -4,7 +4,7 @@ function Card({card, onCardClick}){
     }
 
     return (
-        <li className="photo__item">
+        <>
             <button className="photo__item-delete" type="button"></button>
             <img src={card.link} alt={card.name} onClick={handleCardClick} className="photo__item-img"></img>
             <div className="photo__description">
@@ -14,7 +14,7 @@ function Card({card, onCardClick}){
                     <span className="photo__item-like-count">{card.likes.length > 0 ? card.likes.length : null}</span>
                 </div>
             </div>
-        </li>
+        </>
     )
 }
 export default Card
