@@ -12,7 +12,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setIsSelectedCard] = React.useState(null);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState()
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false)
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true)
@@ -84,7 +84,7 @@ function App() {
       
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups} isOpened={isImagePopupOpen}/>
-  </div>
+    </div>
 
   );
 }
