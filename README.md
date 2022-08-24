@@ -11,7 +11,7 @@
 
 
 ## Ссылки на проект и на макет:
-* [Проект на Github Pages](https://javelinsx.github.io/mesto/)
+* [Проект на Github Pages](https://javelinsx.github.io/mesto-react/)
 * [Макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
 ## Инструкция для работы с проектом:
