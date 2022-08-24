@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup'
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true)
@@ -21,18 +22,22 @@ function App() {
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true)
   }
+  const handleCardClick = (card) => {
+    setSelectedCard(card)
+  }
 
   const closeAllPopups = () => {
     setAddPlacePopupOpen(false)
     setEditAvatarPopupOpen(false)
     setEditProfilePopupOpen(false)
+    setSelectedCard(null)
   }
 
   return (
 
       <div className="page">
         <Header />
-        <Main  onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick}/>
+        <Main  onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
         <Footer />
 
         <PopupWithForm typePopup="edit-profile" titlePopup="Редактировать профиль" isOpened={isEditProfilePopupOpen} onClose={closeAllPopups} buttonText="Сохранить">
@@ -55,24 +60,10 @@ function App() {
 
         </PopupWithForm>
 
+        <PopupWithForm typePopup="confirmation" titlePopup="Вы уверены?"  onClose={closeAllPopups} buttonText="Да">
+        </PopupWithForm>
 
-        
-
-
-        <template className="photo__item-template">
-            <li className="photo__item">
-                <button className="photo__item-delete" type="button"></button>
-                <img src="#" alt="#" className="photo__item-img"></img>
-                <div className="photo__description">
-                    <h2 className="photo__item-title">1</h2>
-                    <div className="photo__item-like-container">
-                        <button className="photo__item-like" type="button"></button>
-                        <span className="photo__item-like-count"></span>
-                    </div>
-
-                </div>
-            </li>
-        </template>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
     </div>
 
   );

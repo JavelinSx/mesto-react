@@ -1,41 +1,32 @@
 import avatar from '../image/Avatar.png';
 import React from 'react'
-import {api, workWithImage,updateAvatar,editProfile,addPhoto,confirmation} from './Utils';
+import Card from './Card'
+import {api} from './Utils';
 
 
-function Main({onAddPlace, onEditAvatar, onEditProfile}){
+function Main({onAddPlace, onEditAvatar, onEditProfile, onCardClick}){
 
 
     const [ userName, setUserName ] = React.useState('Жак-Ив Кусто');
     const [ userDescription , setUserDescription ] = React.useState('Исследователь океана');
     const [ userAvatar, setUserAvatar] = React.useState(avatar);
-    const [ cards ] = React.useState([])
+    const [ cards, setCards ] = React.useState([])
 
     React.useEffect(() => {
-        api.getUserInfo()
-        .then(res => {
-            setUserName(res.name)
-            setUserDescription(res.about)
-            setUserAvatar(res.avatar)
+        Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([dataUser, dataCard]) => {
+            setUserName(dataUser.name)
+            setUserDescription(dataUser.about)
+            setUserAvatar(dataUser.avatar)
+            setCards(dataCard)
         })
         .catch(err => console.log(err))
     }, [])
-    React.useEffect(() => {
-        api.getInitialCards()
-        .then(res => {
-            return res.map( card => { 
-                return{
-                    name: card.name,
-                    link: card.link,
-                    likes: card.likes,
-                    id: card._id
-                }
-                
-            })
-        })
-        .then()
-    },[])
 
+    const cardItems = cards.map(card => {
+        return <Card key={card._id} card={card} onCardClick={onCardClick}></Card>
+    })
+    
     return(
         
         <section className="main">
@@ -53,7 +44,7 @@ function Main({onAddPlace, onEditAvatar, onEditProfile}){
 
             <div className="photo">
                 <ul className="photo__grid">
-
+                    {cardItems}
                 </ul>
             </div>
         
