@@ -9,6 +9,7 @@ function Main({onAddPlace, onEditAvatar, onEditProfile}){
     const [ userName, setUserName ] = React.useState('Жак-Ив Кусто');
     const [ userDescription , setUserDescription ] = React.useState('Исследователь океана');
     const [ userAvatar, setUserAvatar] = React.useState(avatar);
+    const [ cards ] = React.useState([])
 
     React.useEffect(() => {
         api.getUserInfo()
@@ -19,6 +20,21 @@ function Main({onAddPlace, onEditAvatar, onEditProfile}){
         })
         .catch(err => console.log(err))
     }, [])
+    React.useEffect(() => {
+        api.getInitialCards()
+        .then(res => {
+            return res.map( card => { 
+                return{
+                    name: card.name,
+                    link: card.link,
+                    likes: card.likes,
+                    id: card._id
+                }
+                
+            })
+        })
+        .then()
+    },[])
 
     return(
         
