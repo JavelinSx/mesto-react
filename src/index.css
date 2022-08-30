@@ -30,6 +30,9 @@
 @import url(../src/blocks/photo/__item-template/photo__item-template.css);
 @import url(../src/blocks/photo/__item-like-count/photo__item-like-count.css);
 @import url(../src/blocks/photo/__item-like-container/photo__item-like-container.css);
+@import url(../src/blocks/photo/__item-delete/_hidden/photo__item-delete_hidden.css);
+@import url(../src/blocks/photo/__item-delete/_visible/photo__item-delete_visible.css);
+
 
 @import url(../src/blocks/footer/footer.css);
 @import url(../src/blocks/footer/__copyright/footer__copyright.css);

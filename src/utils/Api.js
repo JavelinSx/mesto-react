@@ -41,7 +41,11 @@ export default class Api{
         .then(res => this._parseResponse(res))
     }
 
-    setLikeCard(cardId){
+    changeLikeCardStatus(cardId, isLiked){
+       return isLiked ? this._setLikeCard(cardId) : this._removeLikeCard(cardId)
+    }
+    
+    _setLikeCard(cardId){
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`,{
             method: 'PUT',
             headers: {authorization: this._authorization,
@@ -50,7 +54,7 @@ export default class Api{
         .then(res => this._parseResponse(res))
     }
 
-    removeLikeCard(cardId){
+    _removeLikeCard(cardId){
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`,{
             method: "DELETE",
             headers: {authorization: this._authorization,
@@ -67,7 +71,7 @@ export default class Api{
         .then(res => this._parseResponse(res))
     }
 
-    editUserInfo(data){
+    editUserInfo({name, about}){
         return fetch(`${this._baseUrl}/users/me`,{
             method: 'PATCH',
             headers: {
@@ -75,8 +79,8 @@ export default class Api{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: data.username,
-                about: data.useractivity
+                name: name,
+                about: about
             })
         })
         .then(res => this._parseResponse(res))
