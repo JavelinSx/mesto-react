@@ -33,6 +33,7 @@ export default class Api{
     }
 
     deleteCard(cardId){
+        console.log(cardId)
         return fetch(`${this._baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {authorization: this._authorization,
@@ -86,7 +87,7 @@ export default class Api{
         .then(res => this._parseResponse(res))
     }
 
-    editAvatar(data){
+    editAvatar(avatar){
         return fetch(`${this._baseUrl}/users/me/avatar`,{
             method: 'PATCH',
             headers: {
@@ -94,7 +95,7 @@ export default class Api{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                avatar: data.useravatar
+                avatar: avatar
             })
         })
         .then(res => this._parseResponse(res))
