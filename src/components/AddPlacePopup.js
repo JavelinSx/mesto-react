@@ -1,14 +1,15 @@
-import React from "react"
+import {useEffect, useState} from 'react';
 import PopupWithForm from "./PopupWithForm"
 
 function AddPlacePopup({isOpen, onClose, onAddPlace}){
 
-    const[name, setName] = React.useState('')
-    const[link, setLink] = React.useState('')
+    const[name, setName] = useState('')
+    const[link, setLink] = useState('')
 
     function handleChangeName(e){
         setName(e.target.value)
     }
+    
     function handleChangeAbout(e){
         setLink(e.target.value)
     }
@@ -19,7 +20,15 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
           name: name,
           link: link,
         });
-      }
+    }
+
+    useEffect(() => {
+        if(!isOpen){
+            setName('')
+            setLink('')
+        }
+    },[isOpen])
+
     return(
         <PopupWithForm  typePopup="add-photo" 
                         titlePopup="Новое место" 
@@ -32,6 +41,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
                     className="popup__input" 
                     name="name" 
                     onChange={handleChangeName}
+                    value={name}
                     placeholder="Название" 
                     minLength="2" 
                     maxLength="30" 
@@ -42,6 +52,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
                     className="popup__input" 
                     name="link" 
                     onChange={handleChangeAbout}
+                    value={link}
                     placeholder="Ссылка на картинку" 
                     required>
             </input>

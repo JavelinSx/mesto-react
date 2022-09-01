@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 
 import Header from './Header';
 import Main from './Main';
@@ -10,29 +10,35 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
-import {CurrentUserContext} from './CurrentUserContext'
+import {CurrentUserContext} from '../contexts/CurrentUserContext'
 import { api } from '../utils/utils';
 
 
 function App() {
   
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setIsSelectedCard] = React.useState(null);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({name:'empty', about:'empty', avatar:'empty'})
-  const [cards, setCards] = React.useState([])
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setIsSelectedCard] = useState(null);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({name:'empty', about:'empty', avatar:'empty'})
+  const [cards, setCards] = useState([])
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getInitialCards()
     .then(cards => setCards(cards))
+    .catch(e => {
+      console.log(e)
+    })
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
       api.getUserInfo()
       .then((user) => {
         setCurrentUser(user)
+      })
+      .catch(e => {
+        console.log(e)
       })
   },[])
 
@@ -42,11 +48,17 @@ function App() {
     .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
     })
+    .catch(e => {
+      console.log(e)
+    })
   }
 
   function handleCardDelete(card){
     api.deleteCard(card._id)
     setCards((cards) => cards.filter((c) => c._id !== card._id))
+    .catch(e => {
+      console.log(e)
+    })
   }
 
   const handleAddPlace = ({name, link}) => {
@@ -54,19 +66,24 @@ function App() {
     .then(newCard => {
       setCards([newCard, ...cards])
     })
+    .catch(e => {
+      console.log(e)
+    })
     closeAllPopups()
   }
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true)
   }
+
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true)
   }
-  const handleEditProfileClick = () => {
 
+  const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true)
   }
+  
   const handleCardClick = (card) => {
     setIsImagePopupOpen(true)
     setIsSelectedCard(card)
@@ -82,6 +99,9 @@ function App() {
   const handleUpdateUser = (name, about) => {
     api.editUserInfo(name, about)
     .then(userUpdate => setCurrentUser(userUpdate))
+    .catch(e => {
+      console.log(e)
+    })
     closeAllPopups()
   }
   
@@ -91,6 +111,9 @@ function App() {
         name:currentUser.name,
         about:currentUser.about,
         avatar:userUpdate.avatar}))
+      .catch(e => {
+        console.log(e)
+      })
       closeAllPopups()
   }
 
